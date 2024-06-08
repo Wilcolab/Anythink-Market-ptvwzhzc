@@ -22,6 +22,10 @@ var UserSchema = new mongoose.Schema(
       match: [/\S+@\S+\.\S+/, "is invalid"],
       index: true
     },
+    isVerified: {
+      type: Boolean,
+      default: false
+    },
     bio: String,
     image: String,
     role: {

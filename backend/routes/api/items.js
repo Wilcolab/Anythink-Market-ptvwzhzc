@@ -86,8 +86,10 @@ router.get("/", auth.optional, function(req, res, next) {
         return res.json({
           items: await Promise.all(
             items.map(async function(item) {
-              item.seller = await User.findById(item.seller);
-              return item.toJSONFor(user);
+              const seller = await User.findById(item.seller);
+              const itemJson = item.toJSONFor(user);
+              itemJson.seller.isVerified = seller.isVerified; // Add isVerified
+              return itemJson;
             })
           ),
           itemsCount: itemsCount
