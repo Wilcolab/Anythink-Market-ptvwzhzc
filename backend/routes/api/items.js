@@ -76,6 +76,7 @@ router.get("/", auth.optional, function(req, res, next) {
           .limit(Number(limit))
           .skip(Number(offset))
           .sort({ createdAt: "desc" })
+          .populate('seller') // Ensure seller is populated
           .exec(),
         Item.count(query).exec(),
         req.payload ? User.findById(req.payload.id) : null
