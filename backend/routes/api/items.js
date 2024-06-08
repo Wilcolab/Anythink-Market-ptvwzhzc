@@ -87,9 +87,14 @@ router.get("/", auth.optional, function(req, res, next) {
           items: await Promise.all(
             items.map(async function(item) {
               const seller = await User.findById(item.seller);
-              const itemJson = item.toJSONFor(user);
-              itemJson.seller.isVerified = seller.isVerified; // Add isVerified
-              return itemJson;
+              if (seller) {
+                const itemJson = item.toJSONFor(user);
+                itemJson.seller.isVerified = seller.isVerified; // Add isVerified
+                return itemJson;
+              } else {
+                console.error('Seller not found for item:', item._id);
+                return item.toJSONFor(user);
+              }
             })
           ),
           itemsCount: itemsCount
