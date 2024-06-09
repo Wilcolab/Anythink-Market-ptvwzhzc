@@ -24,8 +24,14 @@ const ItemList = (props) => {
     return <div className="py-4">Loading...</div>;
   }
 
-  if (filteredItems.length === 0) {
-    return <div className="py-4 no-items">No items match your search.</div>;
+  if (filteredItems.length === 0 && props.searchTerm.trim() !== "") {
+    return (
+      <div id="empty" className="text-center py-4">
+        <p className="text-danger">
+          We're sorry, but we couldn't find any products matching your search. Please try again with a different keyword.
+        </p>
+      </div>
+    );
   }
 
 
