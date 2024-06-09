@@ -14,7 +14,7 @@ const Banner = ({ onSearch }) => {
         <div>
           <span>A place to </span>
           <span id="get-part">get</span>
-          <SearchBox onSearch={handleChange} />
+          <SearchBox id="search-box" onSearch={handleChange} />
           <span> the cool stuff.</span>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SearchBox = ({ onSearch }) => {
+const SearchBox = ({ onSearch, id }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event) => {
@@ -15,6 +15,7 @@ const SearchBox = ({ onSearch }) => {
     return (
         <input
             type="text"
+            id={id}
             className="search-box"
             placeholder="Search..."
             value={searchTerm}
