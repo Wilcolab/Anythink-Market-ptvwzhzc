@@ -76,7 +76,6 @@ router.get("/", auth.optional, function(req, res, next) {
           .limit(Number(limit))
           .skip(Number(offset))
           .sort({ createdAt: "desc" })
-          .populate('seller') // Ensure seller is populated
           .exec(),
         Item.count(query).exec(),
         req.payload ? User.findById(req.payload.id) : null
@@ -87,15 +86,8 @@ router.get("/", auth.optional, function(req, res, next) {
         return res.json({
           items: await Promise.all(
             items.map(async function(item) {
-              const seller = await User.findById(item.seller);
-              if (seller) {
-                const itemJson = item.toJSONFor(user);
-                itemJson.seller.isVerified = seller.isVerified; // Add isVerified
-                return itemJson;
-              } else {
-                console.error('Seller not found for item:', item._id);
-                return item.toJSONFor(user);
-              }
+              item.seller = await User.findById(item.seller);
+              return item.toJSONFor(user);
             })
           ),
           itemsCount: itemsCount
