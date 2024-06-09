@@ -1,6 +1,6 @@
 import Banner from "./Banner";
 import MainView from "./MainView";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Tags from "./Tags";
 import agent from "../../agent";
 import { connect } from "react-redux";
@@ -27,13 +27,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Home = ({onLoad, onUnload, tags, onClickTag}) => {
-  const [searchTerm, setSearchTerm] = useState('');
   const tab = "all";
   const itemsPromise = agent.Items.all;
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-  };
 
   useEffect(() => {
     onLoad(
@@ -46,11 +41,11 @@ const Home = ({onLoad, onUnload, tags, onClickTag}) => {
 
     return (
       <div className="home-page">
-        <Banner onSearch={handleSearch}/>
+        <Banner />
 
         <div className="container page">
           <Tags tags={tags} onClickTag={onClickTag} />
-          <MainView searchTerm={searchTerm} />
+          <MainView />
         </div>
       </div>
     );
