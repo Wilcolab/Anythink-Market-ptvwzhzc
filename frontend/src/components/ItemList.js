@@ -8,13 +8,31 @@ const ItemList = (props) => {
   }
 
   if (props.items.length === 0) {
-    return <div className="py-4 no-items">No items are here... yet.</div>;
+    return <div className="py-4 no-items">No items match your search.</div>;
   }
+
+  let filteredItems = props.items
+
+  // Filter items based on search term
+  if (props.searchTerm.trim() !== "") {
+    filteredItems = props.items.filter((item) =>
+      item.title.toLowerCase().includes(props.searchTerm.toLowerCase())
+    );
+  }
+
+  if (!filteredItems) {
+    return <div className="py-4">Loading...</div>;
+  }
+
+  if (filteredItems.length === 0) {
+    return <div className="py-4 no-items">No items match your search.</div>;
+  }
+
 
   return (
     <div className="container py-2">
       <div className="row">
-        {props.items.map((item) => {
+        {filteredItems.map((item) => {
           return (
             <div className="col-sm-4 pb-2" key={item.slug}>
               <ItemPreview item={item} />
@@ -25,7 +43,7 @@ const ItemList = (props) => {
 
       <ListPagination
         pager={props.pager}
-        itemsCount={props.itemsCount}
+        itemsCount={filteredItems.length}
         currentPage={props.currentPage}
       />
     </div>

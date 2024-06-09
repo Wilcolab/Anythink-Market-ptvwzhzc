@@ -1,14 +1,20 @@
 import React from "react";
 import logo from "../../imgs/logo.png";
+import SearchBox from './Searchbox';
 
-const Banner = () => {
+const Banner = ({ onSearch }) => {
+  const handleChange = (searchTerm) => {
+    onSearch(searchTerm);
+  };
+
   return (
     <div className="banner text-white">
       <div className="container p-4 text-center">
-        <img src={logo}/>
+        <img src={logo} />
         <div>
           <span>A place to </span>
           <span id="get-part">get</span>
+          <SearchBox id="search-box" onSearch={handleChange} />
           <span> the cool stuff.</span>
         </div>
       </div>
